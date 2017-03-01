@@ -6,13 +6,30 @@ Plug 'awkward-crow/vim-slime'
 call plug#end()
 
 let g:slime_target="tmux"
-let g:slime_default_config={"socket_name": "r-session", "target_pane": ":"}
+let g:slime_default_config={"socket_name": "", "target_pane": ":"}
 let g:slime_dont_ask_default=0
-
 
 " for vim-markdown (see github.com/plasticboy/vim-markdown)
 let g:vim_markdown_folding_disabled=1
 
+command -nargs=1 T
+\ | execute ":silent !urxvt -e tmux new-session -s <args> 'bash' &"
+\ | execute ':redraw!'
+
+" run R in a new window under tmux
+" can this be tailored to filetype?
+" command -nargs=0 T
+" \ | execute ":silent !urxvt -e tmux new-session -s r-session 'R -q' &"
+" \ | execute ':redraw!'
+
+command -nargs=0 R
+\ | execute ":silent !urxvt -e tmux new-session -s r-session 'R -q' &"
+\ | execute ':redraw!'
+
+" run bash in a new window under tmux
+command -nargs=0 B
+\ | execute ":silent !urxvt -e tmux new-session -s bash-session 'bash' &"
+\ | execute ':redraw!'
 
 " open file in another window
 command -nargs=1 E
