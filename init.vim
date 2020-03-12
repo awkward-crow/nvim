@@ -1,35 +1,49 @@
 " init.vim for neovim
 
 call plug#begin()
-Plug 'plasticboy/vim-markdown'
-Plug 'awkward-crow/vim-slime'
+" Plug 'jakwings/vim-pony'
+Plug 'JuliaEditorSupport/julia-vim'
+" Plug 'plasticboy/vim-markdown'
+" Plug 'gabrielelana/vim-markdown'
+Plug 'file://'.expand('~/a/vim-slime/vim-slime')
+Plug 'dhruvasagar/vim-table-mode'
 call plug#end()
 
-let g:slime_target="tmux"
-let g:slime_default_config={"socket_name": "", "target_pane": ":"}
-let g:slime_dont_ask_default=0
+" built-in markdown stuff (?)
+let g:markdown_fenced_languages = ['r', 'python', 'bash=sh']
 
 " for vim-markdown (see github.com/plasticboy/vim-markdown)
-let g:vim_markdown_folding_disabled=1
+" let g:vim_markdown_folding_disabled=1
+
+" vim-slime
+let g:slime_target="xdotool"
+let g:slime_default_config={}
+" let g:slime_target="tmux"
+" let g:slime_default_config={"socket_name": "", "target_pane": ":"}
+let g:slime_dont_ask_default=0
+
+" R
+let g:r_indent_align_args=0 " see :help ft-r-indent
+
+command -nargs=0 U
+\ | execute ":silent !urxvt -e 'bash' &"
+\ | execute ':redraw!'
 
 command -nargs=1 T
 \ | execute ":silent !urxvt -e tmux new-session -s <args> 'bash' &"
 \ | execute ':redraw!'
 
-" run R in a new window under tmux
-" can this be tailored to filetype?
-" command -nargs=0 T
-" \ | execute ":silent !urxvt -e tmux new-session -s r-session 'R -q' &"
-" \ | execute ':redraw!'
-
-command -nargs=0 R
-\ | execute ":silent !urxvt -e tmux new-session -s r-session 'R -q' &"
+command -nargs=1 R
+\ | execute ":silent !urxvt -e tmux new-session -s <args> 'R -q' &"
 \ | execute ':redraw!'
 
-" run bash in a new window under tmux
-command -nargs=0 B
-\ | execute ":silent !urxvt -e tmux new-session -s bash-session 'bash' &"
-\ | execute ':redraw!'
+command -nargs=1 V
+\ | execute ':w <args>'
+\ | execute ':e <args>'
+
+command -nargs=1 W
+\ | execute ':w <args>'
+\ | execute ':E <args>'
 
 " open file in another window
 command -nargs=1 E
@@ -85,7 +99,8 @@ noremap <M-Space> <Esc>
 inoremap <M-Space> <Esc>
 cnoremap <M-Space> <Esc>
 
-
+" no <M-w> :let b:w = system("xdotool selectwindow \| tr -d '\n'")
+" no <M-m> :call system('xsel -o | xdotool type --window ' . b:w . ' --delay 0 --file -')
 
 " mappings for dv kbd
 
@@ -177,51 +192,40 @@ colorscheme bluegray
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<c-x><c-u>"
 
-" call pathogen#infect()
-" call pathogen#helptags()
-
 syntax on
 filetype on
 filetype plugin indent on
 
-au BufNewFile,BufRead *.jy set filetype=python
-
-" taken from http://vim.wikia.com/wiki/Configuring_the_cursor
-
-" if &term =~ "nvim|xterm\\|rxvt"
-"     " use an orange cursor in insert mode
-"     let &t_SI = "\<Esc>]12;orange\x7"
-"     " use a red cursor otherwise
-"     let &t_EI = "\<Esc>]12;lightgreen\x7"
-"     " silent !echo -ne "\033]12;lightgreen\007"
-"     " reset cursor when vim exits
-"     autocmd VimLeave * silent !echo -ne "\033]12;yellow\007"
-"     " use \003]12;gray\007 for gnome-terminal
-" endif 
-
-
-nnoremap <tab> %
-vnoremap <tab> %
+" nnoremap <tab> %
+" vnoremap <tab> %
+nmap <tab> %
+vmap <tab> %
 
 inoremap <M-.> <C-n>
 inoremap <M-:> <C-p>
 
 " open file under the cursor
-" nnoremap <M-u> gf
+nnoremap <M-f> gf
 
 nnoremap <M-o> :w<cr>
 
-nnoremap <M-q> gq
+nnoremap <M-q> gqap
+
+" mappings for latex
+inoremap <M-p> $
+inoremap <S-M-p> $$
+inoremap <M-y> \ref{
+
 
 " comment/uncomment
 " taken from
 " http://vim.wikia.com/wiki/Comment/UnComment_visually_selected_text
 au FileType haskell,vhdl,ada let b:comment_leader = '-- '
 au FileType vim let b:comment_leader = '" '
-au FileType lisp let b:comment_leader = ';; '
-au FileType c,cpp,java,scala,go let b:comment_leader = '// '
-au FileType r,python,sh,make let b:comment_leader = '# '
-au FileType erlang,tex let b:comment_leader = '% '
+au FileType scheme,lisp let b:comment_leader = ';; '
+au FileType c,javascript,pony,rust,cpp,java,scala,go let b:comment_leader = '// '
+au FileType julia,r,python,sh,make let b:comment_leader = '# '
+au FileType erlang,prolog,mercury,tex,cfl let b:comment_leader = '% '
 noremap <silent> <M-,> :<C-B>sil <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:noh<CR>
 noremap <silent> <M-;> :<C-B>sil <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:noh<CR>
 
