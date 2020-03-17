@@ -26,7 +26,7 @@ let g:slime_dont_ask_default=0
 let g:r_indent_align_args=0 " see :help ft-r-indent
 
 command -nargs=0 U
-\ | execute ":silent !urxvt -e 'bash' &"
+\ | execute ":silent !alacritty &"
 \ | execute ':redraw!'
 
 command -nargs=1 T
@@ -47,12 +47,12 @@ command -nargs=1 W
 
 " open file in another window
 command -nargs=1 E
-\ | execute ':silent !urxvt -e nvim <args> &'
+\ | execute ':silent !alacritty -e nvim <args> &'
 \ | execute ':redraw!'
 
 " open file in another window - readonly
 command -nargs=1 I
-\ | execute ':silent !urxvt -e nvim -R <args> &'
+\ | execute ':silent !alacritty -e nvim -R <args> &'
 \ | execute ':redraw!'
 
 " command abbrev, i -> view
