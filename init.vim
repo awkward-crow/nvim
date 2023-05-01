@@ -1,10 +1,7 @@
 " init.vim for neovim
 
 call plug#begin()
-" Plug 'jakwings/vim-pony'
 Plug 'JuliaEditorSupport/julia-vim'
-" Plug 'plasticboy/vim-markdown'
-" Plug 'gabrielelana/vim-markdown'
 Plug 'file://'.expand('~/a/vim-slime/vim-slime')
 Plug 'dhruvasagar/vim-table-mode'
 call plug#end()
@@ -12,47 +9,40 @@ call plug#end()
 " built-in markdown stuff (?)
 let g:markdown_fenced_languages = ['r', 'python', 'bash=sh']
 
-" for vim-markdown (see github.com/plasticboy/vim-markdown)
-" let g:vim_markdown_folding_disabled=1
-
 " vim-slime
 let g:slime_target="xdotool"
 let g:slime_default_config={}
-" let g:slime_target="tmux"
-" let g:slime_default_config={"socket_name": "", "target_pane": ":"}
 let g:slime_dont_ask_default=0
 
 " R
 let g:r_indent_align_args=0 " see :help ft-r-indent
 
 command -nargs=0 U
-\ | execute ":silent !alacritty &"
+\ | execute ":silent !urxvt &"
 \ | execute ':redraw!'
+
+command -nargs=0 X
+\ | execute ":silent !urxvt -e nvim -c ':terminal' &"
+\ | execute ':redraw!'
+
+autocmd TermOpen * startinsert
+tnoremap <Esc> <C-\><C-n> " does this work?
+tnoremap <S-Space> <C-\><C-n> " does this work?
+tnoremap <C-Space> <C-\><C-n> " is this good enough?
+" tnoremap <M-j> <C-\><C-n>
 
 command -nargs=1 T
-\ | execute ":silent !urxvt -e tmux new-session -s <args> 'bash' &"
+\ | execute ":silent !urxvt -e '<args>' &"
 \ | execute ':redraw!'
-
-command -nargs=1 R
-\ | execute ":silent !urxvt -e tmux new-session -s <args> 'R -q' &"
-\ | execute ':redraw!'
-
-command -nargs=1 V
-\ | execute ':w <args>'
-\ | execute ':e <args>'
-
-command -nargs=1 W
-\ | execute ':w <args>'
-\ | execute ':E <args>'
 
 " open file in another window
 command -nargs=1 E
-\ | execute ':silent !alacritty -e nvim <args> &'
+\ | execute ':silent !urxvt -e nvim <args> &'
 \ | execute ':redraw!'
 
 " open file in another window - readonly
 command -nargs=1 I
-\ | execute ':silent !alacritty -e nvim -R <args> &'
+\ | execute ':silent !urxvt -e nvim -R <args> &'
 \ | execute ':redraw!'
 
 " command abbrev, i -> view
@@ -220,7 +210,7 @@ inoremap <M-y> \ref{
 " comment/uncomment
 " taken from
 " http://vim.wikia.com/wiki/Comment/UnComment_visually_selected_text
-au FileType haskell,vhdl,ada let b:comment_leader = '-- '
+au FileType lua,haskell,vhdl,ada let b:comment_leader = '-- '
 au FileType vim let b:comment_leader = '" '
 au FileType scheme,lisp let b:comment_leader = ';; '
 au FileType c,javascript,pony,rust,cpp,java,scala,go let b:comment_leader = '// '
