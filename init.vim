@@ -2,7 +2,8 @@
 
 call plug#begin()
 Plug 'JuliaEditorSupport/julia-vim'
-Plug 'file://'.expand('~/a/vim-slime/vim-slime')
+" Plug 'file://'.expand('~/a/vim-slime/vim-slime')
+Plug 'file://'.expand('~/a/jpalardy/vim-slime')
 Plug 'dhruvasagar/vim-table-mode'
 call plug#end()
 
@@ -10,7 +11,7 @@ call plug#end()
 let g:markdown_fenced_languages = ['r', 'python', 'bash=sh']
 
 " vim-slime
-let g:slime_target="xdotool"
+let g:slime_target = "x11"
 let g:slime_default_config={}
 let g:slime_dont_ask_default=0
 
@@ -21,7 +22,7 @@ command -nargs=0 U
 \ | execute ":silent !urxvt &"
 \ | execute ':redraw!'
 
-command -nargs=0 X
+command -nargs=0 T
 \ | execute ":silent !urxvt -e nvim -c ':terminal' &"
 \ | execute ':redraw!'
 
@@ -31,7 +32,7 @@ tnoremap <S-Space> <C-\><C-n> " does this work?
 tnoremap <C-Space> <C-\><C-n> " is this good enough?
 " tnoremap <M-j> <C-\><C-n>
 
-command -nargs=1 T
+command -nargs=1 X
 \ | execute ":silent !urxvt -e '<args>' &"
 \ | execute ':redraw!'
 
@@ -197,7 +198,11 @@ inoremap <M-:> <C-p>
 " open file under the cursor
 nnoremap <M-f> gf
 
-nnoremap <M-o> :w<cr>
+" open url under the cursor
+nnoremap <M-b> :!firefox --new-tab <C-r><C-a> <CR>
+nnoremap <M-B> :!firefox --new-window <C-r><C-a> <CR>
+
+" nnoremap <M-o> :w<cr>
 
 nnoremap <M-q> gqap
 
@@ -206,6 +211,10 @@ inoremap <M-p> $
 inoremap <S-M-p> $$
 inoremap <M-y> \ref{
 
+" insert mode mappings for (latex) backtick and back slash
+inoremap <M-f> $
+inoremap <M-b> `
+inoremap <M-d> \
 
 " comment/uncomment
 " taken from
