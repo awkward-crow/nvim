@@ -1,5 +1,14 @@
 # nvim -- config for neovim
 
+## lsp
+
+from https://stackoverflow.com/questions/75665675/how-to-properly-source-use-lua-file-in-init-vim-config-for-neovim#75665834
+
+    If you have an existing init.vim and you don't want to immediately convert everything into lua, you can add to your init.vim:
+
+    lua require('init')
+
+    And this will load the file .config/nvim/lua/init.lua.
 
 ## getting started
 
@@ -51,6 +60,8 @@ still messing around with binding for <C-\><C-n> i.e. switch to normal mode, con
 ## vim-slime
 
 After installing plugins, may need to change keybindings in plugged/vim-slime/plugin/slime.vim
+
+Consider adding binding for send to <M-Enter> and shifting that binding in dwm to modkey-shift xk_return.
 
 ### quoting in vim-slime
 
