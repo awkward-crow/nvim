@@ -1,10 +1,15 @@
 " init.vim for neovim
 
 call plug#begin()
-Plug 'JuliaEditorSupport/julia-vim'
-" Plug 'file://'.expand('~/a/vim-slime/vim-slime')
-Plug 'file://'.expand('~/a/jpalardy/vim-slime')
-Plug 'dhruvasagar/vim-table-mode'
+  Plug 'file://'.expand('~/a/jpalardy/vim-slime')
+  " Plug 'file://'.expand('~/a/vim-slime/vim-slime')
+  Plug 'JuliaEditorSupport/julia-vim'
+  Plug 'rust-lang/rust.vim'
+  Plug 'file://'.expand('~/a/chapel/vim-chpl')
+  Plug 'ziglang/zig.vim'
+  Plug 'dhruvasagar/vim-table-mode'
+  Plug 'andreypopp/vim-terra'
+  Plug 'Julian/lean.nvim'
 call plug#end()
 
 " built-in markdown stuff (?)
@@ -27,9 +32,9 @@ command -nargs=0 T
 \ | execute ':redraw!'
 
 autocmd TermOpen * startinsert
-tnoremap <Esc> <C-\><C-n> " does this work?
-tnoremap <S-Space> <C-\><C-n> " does this work?
-tnoremap <C-Space> <C-\><C-n> " is this good enough?
+tnoremap <Esc> <C-\><C-n> " does this work? yep, good
+tnoremap <S-Space> <C-\><C-n> " does this work? Nah!
+tnoremap <C-Space> <C-\><C-n> " is this good enough? also good
 " tnoremap <M-j> <C-\><C-n>
 
 command -nargs=1 X
@@ -221,9 +226,11 @@ inoremap <M-d> \
 " http://vim.wikia.com/wiki/Comment/UnComment_visually_selected_text
 au FileType lua,haskell,vhdl,ada let b:comment_leader = '-- '
 au FileType vim let b:comment_leader = '" '
-au FileType scheme,lisp let b:comment_leader = ';; '
-au FileType c,javascript,pony,rust,cpp,java,scala,go let b:comment_leader = '// '
-au FileType julia,r,python,sh,make let b:comment_leader = '# '
+au FileType clojure,scheme,lisp let b:comment_leader = ';; '
+au FileType zig,chpl,c,pony,rust let b:comment_leader = '// '
+au FileType typescript,javascript let b:comment_leader = '// '
+au FileType cpp,java,scala,go let b:comment_leader = '// '
+au FileType perl,julia,r,python,sh,make let b:comment_leader = '# '
 au FileType erlang,prolog,mercury,tex,cfl let b:comment_leader = '% '
 noremap <silent> <M-,> :<C-B>sil <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:noh<CR>
 noremap <silent> <M-;> :<C-B>sil <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:noh<CR>
