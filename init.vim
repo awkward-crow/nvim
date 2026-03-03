@@ -10,6 +10,8 @@ call plug#begin()
   Plug 'dhruvasagar/vim-table-mode'
   Plug 'andreypopp/vim-terra'
   Plug 'Julian/lean.nvim'
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'nvim-lua/plenary.nvim'
 call plug#end()
 
 " built-in markdown stuff (?)
@@ -180,6 +182,7 @@ noremap <F5> <c-w>w
 noremap <F7> :only<CR>
 noremap <F6> :bd<CR>
 
+" comment out for lean
 autocmd BufEnter * cd %:p:h
 
 colorscheme bluegray
@@ -224,7 +227,7 @@ inoremap <M-d> \
 " comment/uncomment
 " taken from
 " http://vim.wikia.com/wiki/Comment/UnComment_visually_selected_text
-au FileType lua,haskell,vhdl,ada let b:comment_leader = '-- '
+au FileType lean,lua,haskell let b:comment_leader = '-- '
 au FileType vim let b:comment_leader = '" '
 au FileType clojure,scheme,lisp let b:comment_leader = ';; '
 au FileType zig,chpl,c,pony,rust let b:comment_leader = '// '
@@ -235,6 +238,8 @@ au FileType erlang,prolog,mercury,tex,cfl let b:comment_leader = '% '
 noremap <silent> <M-,> :<C-B>sil <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:noh<CR>
 noremap <silent> <M-;> :<C-B>sil <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:noh<CR>
 
+
+lua require('init')
 
 "
 " The End

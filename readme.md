@@ -1,6 +1,6 @@
 # nvim -- config for neovim
 
-## lsp
+## latest -- lsp
 
 from https://stackoverflow.com/questions/75665675/how-to-properly-source-use-lua-file-in-init-vim-config-for-neovim#75665834
 
@@ -41,6 +41,15 @@ or
     Plug 'gabrielelana/vim-markdown'
 
 somewhere between `call plug#begin()` and `call plug#end()`.
+
+NOTE: plugins are installed in dir. `~/.local/share/nvim/plugged`,
+
+```sh
+ls ~/.local/share/nvim/plugged
+```
+=>
+    claude.vim  lean.nvim       plenary.nvim  vim-chpl   vim-table-mode  zig.vim
+    julia-vim   nvim-lspconfig  rust.vim      vim-slime  vim-terra
 
 ### markdown 
 
