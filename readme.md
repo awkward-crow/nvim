@@ -1,14 +1,46 @@
 # nvim -- config for neovim
 
-## latest -- lsp
+## nvim-lspconfig
 
-from https://stackoverflow.com/questions/75665675/how-to-properly-source-use-lua-file-in-init-vim-config-for-neovim#75665834
+See
 
-    If you have an existing init.vim and you don't want to immediately convert everything into lua, you can add to your init.vim:
+    https://github.com/neovim/nvim-lspconfig
 
-    lua require('init')
 
-    And this will load the file .config/nvim/lua/init.lua.
+## julia lsp
+
+```sh
+julia --project=~/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.add("LanguageServer"); Pkg.add("SymbolServer"); Pkg.add("StaticLint")'
+```
+
+### julials, Project.toml and root directories
+
+From Clod,
+
+ The problem is that julials needs the Julia environment path passed dynamically as an argument to the  
+  julia process — lspconfig does this via on_new_config. The new vim.lsp.config API doesn't have an      
+  equivalent hook.                                                                                       
+   
+  You can check what config Neovim or lspconfig already provides:                                        
+                  
+  :lua print(vim.inspect(vim.lsp.config.julials))
+
+  If lspconfig is installed, it registers its configs so vim.lsp.enable('julials') picks them up
+  automatically. In that case, you can just override root_markers on top:
+
+  vim.lsp.config('julials', {
+    root_markers = { 'Project.toml', 'JuliaProject.toml', '.git' },
+  })
+  vim.lsp.enable('julials')
+
+  lspconfig's underlying on_new_config for julials will still run and use the resolved root as the
+  environment path — you're just overriding the root detection part.
+
+  If lspconfig isn't providing the config, you'd have to hardcode the cmd with the full julia invocation
+  including the environment path, which gets ugly. In that case it's more pragmatic to keep lspconfig for
+   julials until the built-in configs mature.
+
+I'll try the config for `julials` as suggested above.
 
 ## getting started
 
