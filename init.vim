@@ -2,17 +2,18 @@
 
 call plug#begin()
   Plug 'file://'.expand('~/a/jpalardy/vim-slime')
-  " Plug 'file://'.expand('~/a/vim-slime/vim-slime')
   Plug 'JuliaEditorSupport/julia-vim'
   Plug 'rust-lang/rust.vim'
   Plug 'file://'.expand('~/a/chapel/vim-chpl')
   Plug 'ziglang/zig.vim'
   Plug 'dhruvasagar/vim-table-mode'
-  Plug 'andreypopp/vim-terra'
   Plug 'Julian/lean.nvim'
   Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-lua/plenary.nvim'
 call plug#end()
+
+" color schemes and foot [wayland]
+set notgc
 
 " built-in markdown stuff (?)
 let g:markdown_fenced_languages = ['r', 'python', 'bash=sh']
@@ -39,30 +40,22 @@ tnoremap <S-Space> <C-\><C-n> " does this work? Nah!
 tnoremap <C-Space> <C-\><C-n> " is this good enough? also good
 " tnoremap <M-j> <C-\><C-n>
 
-command -nargs=1 X
-\ | execute ":silent !urxvt -e '<args>' &"
-\ | execute ':redraw!'
-
 " open file in another window
 command -nargs=1 E
 \ | execute ':silent !urxvt -e nvim <args> &'
-\ | execute ':redraw!'
-
-" open file in another window - readonly
-command -nargs=1 I
-\ | execute ':silent !urxvt -e nvim -R <args> &'
 \ | execute ':redraw!'
 
 " command abbrev, i -> view
 cabbrev i <C-R>=(getcmdtype()==':' && getcmdpos()==1 ? 'view' : 'i')<CR>
 
 
+" set clipboard="unnamed,unnamedplus"
 set clipboard=unnamed
 
 " do away with status line
 set laststatus=0
 
-set modelines=0 
+set modelines=0
 
 set backspace=indent,eol,start
 
@@ -182,14 +175,10 @@ noremap <F5> <c-w>w
 noremap <F7> :only<CR>
 noremap <F6> :bd<CR>
 
-" comment out for lean
-autocmd BufEnter * cd %:p:h
+" comment out for lean -- `cd` -> `lcd` ??
+autocmd BufEnter * lcd %:p:h
 
-colorscheme bluegray
-
-" let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-x><c-u>"
+colorscheme bluegray " see ./colors/bluegray for handling of markdown syntax highlighting
 
 syntax on
 filetype on

@@ -44,3 +44,18 @@ hi Underlined		cterm=underline		ctermfg=none
 hi Ignore		cterm=bold		ctermfg=none
 hi Error		ctermbg=none		ctermfg=1
 hi Todo			cterm=standout		ctermfg=none
+
+lua << EOF
+vim.api.nvim_set_hl(0, "@markup.raw.block.markdown", {
+  fg = vim.api.nvim_get_hl(0, { name = "Special", link = false }).fg,
+  bold = false,
+})
+vim.api.nvim_set_hl(0, "@label.markdown", {
+  fg = vim.api.nvim_get_hl(0, { name = "Statement", link = false }).fg,
+  bold = false,
+})
+vim.api.nvim_set_hl(0, "@markup.raw.markdown_inline", {
+  fg = vim.api.nvim_get_hl(0, { name = "Special", link = false }).fg,
+  bold = false,
+})
+EOF
