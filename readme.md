@@ -1,5 +1,12 @@
 # nvim -- config for neovim
 
+## latest
+ - see ./colors/bluegray for markdown syntax highlighting, recent treesitter changes caused fenced blocks to be in bold -- uurgh!
+ - `lcd` rather than `cd` in `autocmd BufEnter * ...`, should play more nicely with lsp
+
+## next steps
+ - tidy this up, it's a mess!
+
 ## nvim-lspconfig
 
 See
