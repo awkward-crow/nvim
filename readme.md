@@ -5,7 +5,7 @@
  - `lcd` rather than `cd` in `autocmd BufEnter * ...`, should play more nicely with lsp
 
 ## next steps
- - tidy this up, it's a mess!
+ - tidy this up, it's out of date and a mess!
 
 ## nvim-lspconfig
 
